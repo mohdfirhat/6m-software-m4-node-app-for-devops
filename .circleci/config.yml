@@ -25,6 +25,19 @@ test:
         echo "Running tests..."
         npm run test
 
+publish:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check:
+          docker-username: DOCKERHUB_LOGIN  # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
+          docker-password: DOCKERHUB_PASSWORD  # DOCKER_PASSWORD is the default value
+      - docker/build:
+          image: mohdfirhat/test_repository
+      - docker/push:
+          image: mohdfirhat/test_repository
+
 workflows:
   simple_workflow:
     jobs:
@@ -32,3 +45,7 @@ workflows:
       - test:
         requires:
           - build
+      - publish:
+        requires:
+          - build
+          - test
