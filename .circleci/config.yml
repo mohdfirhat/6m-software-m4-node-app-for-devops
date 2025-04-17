@@ -52,7 +52,7 @@ jobs:
         command: |
           heroku container:login
           heroku container:push web -a mohdfirhat-su-devops
-          heroku container:release web -a edison-su-devops
+          heroku container:release web -a mohdfirhat-su-devops
 
 workflows:
   simple_workflow:
