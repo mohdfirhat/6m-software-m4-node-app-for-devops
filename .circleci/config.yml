@@ -42,7 +42,7 @@ jobs:
           image: mohdfirhat/test_repository
   deploy:
     docker:
-      - image:cimg/node:16.10
+      - image: cimg/node:16.10
     steps:
       - setup_remote_docker
       - heroku/install
@@ -65,5 +65,5 @@ workflows:
           requires:
             - test
       - deploy:
-        requires:
-          - publish
+          requires:
+            - publish
