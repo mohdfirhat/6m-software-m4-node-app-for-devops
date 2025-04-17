@@ -40,6 +40,7 @@ jobs:
           image: mohdfirhat/test_repository
       - docker/push:
           image: mohdfirhat/test_repository
+
   deploy:
     docker:
       - image: cimg/node:16.10
@@ -48,11 +49,11 @@ jobs:
       - heroku/install
       - checkout
       - run:
-        name: Heroku Container Push
-        command: |
-          heroku container:login
-          heroku container:push web -a mohdfirhat-su-devops
-          heroku container:release web -a edison-su-devops
+          name: Heroku Container Push
+          command: |
+            heroku container:login
+            heroku container:push web -a mohdfirhat-su-devops
+            heroku container:release web -a edison-su-devops
 
 workflows:
   simple_workflow:
