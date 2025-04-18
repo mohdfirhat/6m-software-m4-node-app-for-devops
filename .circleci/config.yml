@@ -62,16 +62,15 @@ workflows:
       - test:
           requires:
             - build
-
-  release_workflow_build_push_and_publish:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
       - build-and-push:
           requires:
             - test
+          filters:
+            branches:
+              only: release
       - deploy:
           requires:
             - build-and-push
+          filters:
+            branches:
+              only: release
