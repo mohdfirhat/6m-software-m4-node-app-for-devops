@@ -28,7 +28,7 @@ jobs:
           echo "Running tests..."
           npm run test
 
-  publish:
+  build-and-push:
     executor: docker/docker
     steps:
       - setup_remote_docker
@@ -61,9 +61,9 @@ workflows:
       - test:
           requires:
             - build
-      - publish:
+      - build-and-push:
           requires:
             - test
       - deploy:
           requires:
-            - publish
+            - build-and-push
