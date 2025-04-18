@@ -28,7 +28,7 @@ jobs:
           echo "Running tests..."
           npm run test
 
-  publish:
+  build-and-push:
     executor: docker/docker
     steps:
       - setup_remote_docker
@@ -56,15 +56,28 @@ jobs:
             heroku container:release web -a mohdfirhat-su-devops
 
 workflows:
-  simple_workflow:
+  main_workflow_build_and_test:
+    when:
+      condition:
+        equal: [ main, << pipeline.git.branch >> ]
     jobs:
       - build
       - test:
           requires:
             - build
-      - publish:
+  
+  release_workflow_build_push_and_publish:
+    when:
+      condition:
+        equal: [ release, << pipeline.git.branch >> ]
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - build-and-push:
           requires:
             - test
       - deploy:
           requires:
-            - publish
+            - build-and-push
