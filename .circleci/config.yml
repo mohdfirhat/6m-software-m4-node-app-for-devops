@@ -57,19 +57,13 @@ jobs:
 
 workflows:
   main_workflow_build_and_test:
-    when:
-      condition:
-        equal: [ main, << pipeline.git.branch >> ]
     jobs:
       - build
       - test:
           requires:
             - build
-  
+
   release_workflow_build_push_and_publish:
-    when:
-      condition:
-        equal: [ release, << pipeline.git.branch >> ]
     jobs:
       - build
       - test:
